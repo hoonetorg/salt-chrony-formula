@@ -23,8 +23,8 @@ chrony_config__chrony.conf:
 #    - context: /files/etc/chrony.conf
 {% if "server" in chrony or "allow" in chrony %}
     - changes:
-      - rm server
   {% if "server" in chrony %}
+      - rm server
     {% for server in chrony.server %}
       - set server[] {{server}}
       - set server[.]/iburst
