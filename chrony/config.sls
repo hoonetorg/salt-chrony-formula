@@ -18,8 +18,9 @@ chrony_config__chrony.conf:
 
 chrony_config__chrony.conf:
   augeas.change:
-    - lens: chrony.conf
-    - context: /files/etc/chrony.conf
+    - name: {{ chrony.config }}
+#    - lens: chrony.conf
+#    - context: /files/etc/chrony.conf
 {% if "server" in chrony or "allow" in chrony %}
     - changes:
       - rm server
