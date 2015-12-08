@@ -27,8 +27,8 @@ chrony_config__chrony.conf:
       - rm server
     {% if chrony.server %}
       {% for server in chrony.server %}
-      - set server[] {{server}}
-      - set server[.]/iburst
+      - set server[{{loop.index}}] {{server}}
+      - set server[{{loop.index}}] iburst
       {% endfor %} 
     {% endif %}
   {% endif %}
@@ -36,7 +36,7 @@ chrony_config__chrony.conf:
       - rm allow
     {% if chrony.allow %}
       {% for allow in chrony.allow %}
-      - set allow[] {{allow}}
+      - set allow[{{loop.index}}] {{allow}}
       {% endfor %} 
     {% endif %}
   {% endif %}
