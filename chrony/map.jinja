@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{% import_yaml 'chrony/defaults.yaml' as default_settings %}
+
+{% set os_family_map = salt['grains.filter_by']({
+        'Debian': {
+            "pkgs" : 
+              [
+                'chrony',
+              ],
+            "config": '/etc/chrony/chrony.conf'
+            "service" : {
+               "name": 'chronyd',
+               "state": 'running',
+               "enable": True,
+            },
+        },
+        'RedHat': {
+            "pkgs" : 
+              [
+                'chrony',
+              ],
+            "config": '/etc/chrony.conf'
+            "service" : {
+               "name": 'chronyd',
+               "state": 'running',
+               "enable": True,
+            },
+        },
+  }
+  , grain="os_family"
+  , merge=salt['pillar.get']('chrony:lookup'))
+%}
+{% do default_settings.chrony.update(os_family_map) %}
+
+{% set chrony = salt['pillar.get'](
+        'chrony',
+        default=default_settings.chrony,
+        merge=True
+    )
+%}
