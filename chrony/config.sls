@@ -25,9 +25,23 @@ chrony_config__chrony.conf:
     - changes:
   {% if "server" in chrony %}
       - rm server
-    {% for server in chrony.server %}
+    {% if chrony.server %}
+      - rm server
+      {% for server in chrony.server %}
       - set server[] {{server}}
       - set server[.]/iburst
-    {% endfor %} 
+      {% endfor %} 
+    {% endif %}
   {% endif %}
+  {% if "allow" in chrony %}
+      - rm allow
+    {% if chrony.allow %}
+      - rm allow
+      {% for allow in chrony.allow %}
+      - set allow[] {{allow}}
+      {% endfor %} 
+    {% endif %}
+  {% endif %}
+{% else %}
+    - changes: []
 {% endif %}
