@@ -28,7 +28,7 @@ chrony_config__chrony.conf:
     {% if chrony.server %}
       {% for server in chrony.server %}
       - set server[{{loop.index}}] {{server}}
-      - set server[{{loop.index}}] iburst
+      - set server[{{loop.index}}]/iburst
       {% endfor %} 
     {% endif %}
   {% endif %}
